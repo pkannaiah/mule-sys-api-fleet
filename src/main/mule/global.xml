@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd 
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
+	<http:listener-config name="http-listener-config">
+        <http:listener-connection host="${http.host}" port="${http.port}" />
+    </http:listener-config>
+    <apikit:config name="api-config" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" raml="api-template.raml"/>
+	<secure-properties:config name="secure-properties-config" doc:name="Secure Properties Config" doc:id="db4a1c0a-7d3d-4605-bc2f-ca4eae5fd8d3" file="env/api-${mule.env}-sec.yaml" key="${encryption.key}" />
+	<configuration doc:name="common-error-handler-config" doc:id="fa960292-2671-4ff3-b2b4-7dabb19608ac" defaultErrorHandler-ref="apiErrorStrategy" />
+	<configuration-properties doc:name="properties-config" doc:id="b51e7a98-b7d5-49db-9ad6-06f6f33afcec" file="env/api-${mule.env}.yaml" />
+	<global-property doc:name="Global Property" doc:id="ff2b0536-92ce-409e-adf0-fc79b8aa4285" name="mule.env" value="dev" />
+	<global-property doc:name="Global Property" doc:id="a07f9aa4-f13a-4ab1-bef8-9d2b9b83c506" name="encryption.key" value="mulesoft123456789" />
+	<api-gateway:autodiscovery apiId="${autodiscovery.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="2524ce90-12dd-4f03-bd74-3dc88f63d127" flowRef="api-main" />
+    
+	
+	
+	
+
+</mule>

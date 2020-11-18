@@ -1,0 +1,68 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/78c42fa2-a70e-4d2a-8191-91fe23f5e9ce/ # 
+title: api-template
+version: 1.0
+
+types:
+  workshopRQ:
+    properties:
+      workshopId: integer
+      workshopName: string
+      clientName: string
+      clientPhone: string
+      clientEmail : string
+
+/workshop:
+  /eventsData:
+    get:
+      description: Retrieve all event data from S3
+      responses:
+        200:
+          body:
+            application/json:
+              
+              example: |
+                  {
+                    "workshopId" : 123,
+                    "workshopName" : "name of the workshop",
+                    "clientName" : "name of the client",
+                    "clientPhone" : "+18977656382",
+                    "clientEmail" : "client@email.com"
+                  }
+        400:
+          body:
+            application/json:
+              example: {"message" : "Bad Request"}
+        500:
+          body:
+            application/json:
+              example: {"message" : "Internal Server Error"}
+    post:
+      body:
+        application/json:
+          type: workshopRQ
+          example: |
+                  {
+                    "workshopId" : 123,
+                    "workshopName" : "name of the workshop",
+                    "clientName" : "name of the client",
+                    "clientPhone" : "+18977656382",
+                    "clientEmail" : "client@email.com"
+                  }
+      responses:
+        201:
+          body:
+            application/json:
+              example: {"message" : "Created the record"}
+        400:
+          body:
+            application/json:
+              example: {"message" : "Bad Request"}
+        500:
+          body:
+            application/json:
+              example: {"message" : "Internal Server Error"}         
+                
+              
+            
+                
